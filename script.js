@@ -1,81 +1,95 @@
-$(document).ready(function () {
-    // Sticky navbar on scroll
-    $(window).scroll(function () {
-        if (this.scrollY > 20) {
-            $('.navbar').addClass("sticky");
-        } else {
-            $('.navbar').removeClass("sticky");
-        }
+/* Ensure jQuery is loaded safely */
+jQuery(document).ready(function ($) {
 
-        if (this.scrollY > 500) {
-            $('.scroll-up-btn').addClass("show");
-        } else {
-            $('.scroll-up-btn').removeClass("show");
-        }
-    });
+```
+// Sticky navbar + scroll button
+$(window).on("scroll", function () {
+    if (window.scrollY > 20) {
+        $(".navbar").addClass("sticky");
+    } else {
+        $(".navbar").removeClass("sticky");
+    }
 
-    // Slide-up button
-    $('.scroll-up-btn').click(function () {
-        $('html').animate({ scrollTop: 0 });
-        $('html').css("scrollBehavior", "auto");
-    });
+    if (window.scrollY > 500) {
+        $(".scroll-up-btn").addClass("show");
+    } else {
+        $(".scroll-up-btn").removeClass("show");
+    }
+});
 
-    // Smooth scroll on menu click
-    $('.navbar .menu li a').click(function () {
-        $('html').css("scrollBehavior", "smooth");
-    });
+// Scroll to top
+$(".scroll-up-btn").on("click", function () {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+});
 
-    // Toggle navbar menu
-    $('.menu-btn').click(function () {
-        $('.navbar .menu').toggleClass("active");
-        $('.menu-btn i').toggleClass("active");
-    });
+// Smooth scroll
+$(".navbar .menu li a").on("click", function () {
+    $("html").css("scrollBehavior", "smooth");
+});
 
-    // Typing animations
-    var typed = new Typed(".typing", {
-        strings: ["Quality Controller"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
+// Toggle menu
+$(".menu-btn").on("click", function () {
+    $(".navbar .menu").toggleClass("active");
+    $(".menu-btn i").toggleClass("active");
+});
 
-    var typed2 = new Typed(".typing-2", {
-        strings: ["Quality Controller"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
+// Typing animation (safe check)
+if (typeof Typed !== "undefined") {
+    new Typed(".typing", {
+        strings: ["Quality Controller"],
+        typeSpeed: 100,
+        backSpeed: 60,
+        loop: true
+    });
 
-    // Owl Carousel initialization
-    var owl = $(".carousel");
-    owl.owlCarousel({
-        loop: true,
-        margin: 20,
-        nav: false,
-        dots: true,
-        autoplay: false,         // Disable default autoplay
-        responsive: {
-            0: { items: 1 },
-            600: { items: 2 },
-            1000: { items: 3 }
-        },
-        slideBy: 3              // Slide 3 items at a time
-    });
+    new Typed(".typing-2", {
+        strings: ["Quality Controller"],
+        typeSpeed: 100,
+        backSpeed: 60,
+        loop: true
+    });
+} else {
+    console.warn("Typed.js not loaded");
+}
 
-    // Custom autoplay: move 3 items every 3 seconds
-    var autoplayInterval = setInterval(function () {
-        owl.trigger('next.owl.carousel', [3]);
-    }, 3000);
+// Owl Carousel (safe check)
+if ($.fn.owlCarousel) {
+    var owl = $(".carousel");
 
-    // Pause on hover
-    owl.on('mouseenter', function () {
-        clearInterval(autoplayInterval);
-    });
+    owl.owlCarousel({
+        loop: true,
+        margin: 20,
+        nav: false,
+        dots: true,
+        autoplay: false,
+        responsive: {
+            0: { items: 1 },
+            600: { items: 2 },
+            1000: { items: 3 }
+        },
+        slideBy: 3
+    });
 
-    // Resume on mouse leave
-    owl.on('mouseleave', function () {
-        autoplayInterval = setInterval(function () {
-            owl.trigger('next.owl.carousel', [3]);
-        }, 3000);
-    });
+    // Custom autoplay
+    var autoplayInterval = setInterval(function () {
+        owl.trigger("next.owl.carousel", [3]);
+    }, 3000);
+
+    // Pause on hover
+    owl.on("mouseenter", function () {
+        clearInterval(autoplayInterval);
+    });
+
+    // Resume on leave
+    owl.on("mouseleave", function () {
+        autoplayInterval = setInterval(function () {
+            owl.trigger("next.owl.carousel", [3]);
+        }, 3000);
+    });
+
+} else {
+    console.warn("Owl Carousel not loaded");
+}
+```
+
 });
