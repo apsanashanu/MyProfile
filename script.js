@@ -33,14 +33,14 @@ $(document).ready(function () {
 
     // Typing animations
     var typed = new Typed(".typing", {
-        strings: ["Product Analyst", "Collaboration Enthusiast", "Content Creator"],
+        strings: ["Quality Controller"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
     });
 
     var typed2 = new Typed(".typing-2", {
-        strings: ["Product Analyst", "Collaboration Enthusiast", "Content Creator"],
+        strings: ["Quality Controller"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
